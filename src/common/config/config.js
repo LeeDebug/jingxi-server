@@ -17,7 +17,7 @@ module.exports = {
         appkey: '123123123123123123123123', // 对应快递鸟用户后台 API key
         request_url: 'http://api.kdniao.com/Ebusiness/EbusinessOrderHandle.aspx'
     },
-   mianexpress:{
+    mianexpress:{
         appid: '123123', // 对应快递鸟用户后台 用户ID
         appkey: '123123-4e61236-94cb5297309a', // 对应快递鸟用户后台 API key
         request_url: 'http://testapi.kdniao.com:8081/api/EOrderService',
@@ -25,17 +25,17 @@ module.exports = {
         ip_server_url:'http://www.kdniao.com/External/GetIp.aspx'
     },
     qiniu: {
-        access_key: 'asdlakjsdlajlajsdlas',      // 在七牛密钥管理中获取
-        secret_key: 'alskdjalksjdlasjdlajsd',    // 在七牛密钥管理中获取
-        bucket: 'bucketname',                    // 请填自己的bucket的名称
-        domain: 'domain/'                         // 请填自己的domain域名
+        access_key: 'SnP6xZIP8j07fLjlWLJPORnxWyakFqYfDPZbbskU',      // 在七牛密钥管理中获取
+        secret_key: 'Sybj1omSRw65ZW1WTOp-bOce4sprgSBXIVp9wBwG',    // 在七牛密钥管理中获取
+        bucket: 'jingxi',                    // 请填自己的bucket的名称
+        domain: 'sgrbafg6b.hn-bkt.clouddn.com/'                         // 请填自己的domain域名
     },
     // 在七牛新建一个https的空间，这个是用来存储分享图片的https图片，对应的是goods表中的https_pic_url
     qiniuHttps: {
-        access_key: 'asdlakjsdlajlajsdlasasdla', // 在七牛密钥管理中获取
-        secret_key: 'aaaaaaaaaaasdasdasdasd', // 在七牛密钥管理中获取
-        bucket: 'bucketname', // 自己设置的
-        domain: 'domain/', // 自己设置，例如：'http://img.你的域名.com/',别忘了这个”/“
+        access_key: 'SnP6xZIP8j07fLjlWLJPORnxWyakFqYfDPZbbskU', // 在七牛密钥管理中获取
+        secret_key: 'Sybj1omSRw65ZW1WTOp-bOce4sprgSBXIVp9wBwG', // 在七牛密钥管理中获取
+        bucket: 'jingxi', // 自己设置的
+        domain: 'sgrbafg6b.hn-bkt.clouddn.com/', // 自己设置，例如：'http://img.你的域名.com/',别忘了这个”/“
         // https://developer.qiniu.com/kodo/manual/1671/region-endpoint
         zoneNum: 0  // 这个自己根据地区设置：华东 0；华北 1；华南 2； 北美 3；东南亚 4
     },
