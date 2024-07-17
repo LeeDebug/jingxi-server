@@ -1,5 +1,6 @@
 const path = require('path');
-module.exports = [{
+module.exports = [
+	{
 		interval: '60s',
 		enable: true,
 		immediate: true,
