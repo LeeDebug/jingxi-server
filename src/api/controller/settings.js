@@ -35,6 +35,13 @@ module.exports = class extends Base {
     return this.success(info);
   }
   async userDetailAction() {
+
+    // TODO: 尝试添加 获取手机号
+    // const tokenServer = think.service('weixin', 'api');
+    // console.log('\n=-=-=-> tokenServer: ', tokenServer)
+    // const phoneNumber = await tokenServer.getPhoneNumber();
+    // console.log('=-=-=-> phoneNumber: ', phoneNumber)
+
     let userId = this.getLoginUserId();
     if (userId != 0) {
       let info = await this.model("user")

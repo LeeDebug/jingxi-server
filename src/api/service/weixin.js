@@ -181,6 +181,8 @@ module.exports = class extends think.Service {
             });
         });
     }
+
+    // ! 获取 access_token 密钥
     async getAccessToken() {
         const options = {
             method: 'POST',
@@ -225,11 +227,9 @@ module.exports = class extends think.Service {
         switch (type) {
             case 1:
                 return 'TXWzXjO4C0odXCwQk4idgBtGcgSKBEWXJETYBZcRAzE';
-                break;
                 // 支付成功
             case 2:
                 return 'COiQGBTzTtz_us5qYeJf0K-pFAyubBuWQh40sV1eAuw';
-                break;
                 // 发货通知
             default:
                 return '400';
@@ -239,11 +239,9 @@ module.exports = class extends think.Service {
         switch (type) {
             case 1:
                 return 'TXWzXjO4C0odXCwQk4idgBtGcgSKBEWXJETYBZcRAzE';
-                break;
                 // 支付成功
             case 2:
                 return 'COiQGBTzTtz_us5qYeJf0K-pFAyubBuWQh40sV1eAuw';
-                break;
                 // 发货通知
             default:
                 return '400';
@@ -280,5 +278,27 @@ module.exports = class extends think.Service {
         };
         let posting = await rp(sendInfo);
         return posting;
+    }
+
+    // 获取手机号
+    async getPhoneNumber() {
+        console.log('=-=-=-> func -> getPhoneNumber: ', 11111111111111)
+        const access_token = await this.getAccessToken()
+        const options = {
+            method: 'POST',
+            // url: 'https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=ACCESS_TOKEN',
+            url: 'https://api.weixin.qq.com/wxa/business/getuserphonenumber',
+            qs: {
+                // secret: think.config('weixin.secret'),
+                // appid: think.config('weixin.appid'),
+                code: access_token
+            }
+        };
+        let rpData = await rp(options);
+        rpData = JSON.parse(rpData);
+        console.log('=-=-=-> rpData:\n', JSON.stringify(rpData, null, 4))
+        const phoneNumber = '123342114512412';
+        console.log('=-=-=-> 22222222: ', 22222222)
+        return phoneNumber;
     }
 };

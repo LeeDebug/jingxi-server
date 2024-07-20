@@ -2,8 +2,10 @@ const Base = require("./base.js");
 const rp = require("request-promise");
 module.exports = class extends Base {
   async loginByWeixinAction() {
+    // console.log('\n=-=-=-> func -> loginByWeixinAction')
     // const code = this.post('code');
     const code = this.post("code");
+    // console.log('=-=-=-> code: ', code)
     let currentTime = parseInt(new Date().getTime() / 1000);
     const clientIp = ""; // 暂时不记录 ip test git
     // 获取openid
@@ -17,11 +19,13 @@ module.exports = class extends Base {
         appid: think.config("weixin.appid"),
       },
     };
+    // console.log('=-=-=-> options:\n', JSON.stringify(options, null, 4))
     let sessionData = await rp(options);
     sessionData = JSON.parse(sessionData);
     if (!sessionData.openid) {
       return this.fail("登录失败，openid无效");
     }
+    // console.log('=-=-=-> sessionData:\n', JSON.stringify(sessionData, null, 4))
     // 根据openid查找用户是否已经注册
     let userId = await this.model("user")
       .where({
@@ -47,6 +51,7 @@ module.exports = class extends Base {
       });
       is_new = 1;
     }
+    // console.log('=-=-=-> userId: ', userId)
     sessionData.user_id = userId;
     // 更新登录信息
     await this.model("user")
@@ -72,6 +77,7 @@ module.exports = class extends Base {
     if (think.isEmpty(newUserInfo) || think.isEmpty(sessionKey)) {
       return this.fail("登录失败4");
     }
+
     return this.success({
       token: sessionKey,
       userInfo: newUserInfo,
