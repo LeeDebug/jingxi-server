@@ -9,6 +9,7 @@ module.exports = class extends Base {
      * @return {Promise} []
      */
     async listAction() {
+        console.log('=-=-=-> func => listAction')
 		// const userId = this.getLoginUserId();;
 		const userId = this.getLoginUserId();
 		const showType = this.get('showType');
@@ -48,8 +49,8 @@ module.exports = class extends Base {
         return this.success(orderList);
     }
     // 获得订单数量
-    //
     async countAction() {
+        console.log('=-=-=-> func => countAction')
         const showType = this.get('showType');
 		const userId = this.getLoginUserId();;
         let status = [];
@@ -65,10 +66,10 @@ module.exports = class extends Base {
         });
     }
     // 获得订单数量状态
-    //
     async orderCountAction() {
-		// const user_id = this.getLoginUserId();;
+        console.log('=-=-=-> func => orderCountAction')
 		const user_id = this.getLoginUserId();
+        // console.log('=-=-=-> orderCountAction > user_id: ', user_id)
         if(user_id != 0){
             let toPay = await this.model('order').where({
                 user_id: user_id,
@@ -95,7 +96,6 @@ module.exports = class extends Base {
             }
             return this.success(newStatus);
         }
-       
     }
     async detailAction() {
         const orderId = this.get('orderId');

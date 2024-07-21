@@ -1,6 +1,9 @@
 const mysql = require('think-model-mysql');
 
 module.exports = {
+    /**
+     * see more: https://github.com/mysqljs/mysql#connection-options
+     */
     handle: mysql,
     database: 'jingxi', // hiolabsDB
     prefix: 'hiolabs_',
