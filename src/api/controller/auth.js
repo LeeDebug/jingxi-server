@@ -78,6 +78,17 @@ module.exports = class extends Base {
       return this.fail("登录失败4");
     }
 
+    /**
+     * 在 我的 页面会用到的接口数据
+     */
+    // 获取当前余额
+    const balance_number = '45.00'
+    newUserInfo.balance_number = balance_number
+
+    // 获取当前余额
+    const points_number = '798.00'
+    newUserInfo.points_number = points_number
+
     // 获取已经获得优惠券的张数
     const coupon_count = await this.model("user_coupons").where({ user_id: userId }).count()
     newUserInfo.coupon_count = coupon_count

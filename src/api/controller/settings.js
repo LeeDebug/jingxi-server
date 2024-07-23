@@ -52,6 +52,17 @@ module.exports = class extends Base {
         .find();
       info.nickname = Buffer.from(info.nickname, "base64").toString();
 
+      /**
+       * 在 我的 页面会用到的接口数据
+       */
+      // 获取当前余额
+      const balance_number = '45.00'
+      info.balance_number = balance_number
+
+      // 获取当前余额
+      const points_number = '798.00'
+      info.points_number = points_number
+
       // 获取已经获得优惠券的张数
       const coupon_count = await this.model("user_coupons").where({ user_id: userId }).count()
       info.coupon_count = coupon_count
