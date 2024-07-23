@@ -14,8 +14,37 @@ module.exports = class extends Base {
 
 		// 获取列表数据
         const model = this.model('user_coupons');
-		const list = await model.where({ user_id: userId }).select()
+        // ! 暂时先这样用着吧！！！
+		let list = await model.alias('uc').join({
+            table: 'coupons',
+            join: 'inner', // left right inner
+            as: 'c',
+            on: ['uc.coupon_id', 'c.id']
+        }).where({ user_id: userId }).select()
 		// console.log('=-=-=-> listAction -> list: ', list)
+
+        /**
+         * 根据不同的 coupon_type 返回数据
+         *      0: 所有优惠券
+         *      1: 待使用
+         *      2: 已使用
+         *      3: 已过期
+         */
+        const coupon_type = this.get('coupon_type')
+        console.log('=-=-=-> coupon_type: ', coupon_type)
+        // 未使用
+        if (coupon_type == 1) {
+            list = list.filter(v => v.redeemed == 0)
+        }
+        // 已使用
+        if (coupon_type == 2) {
+            list = list.filter(v => v.redeemed == 1)
+        }
+        // 已过期
+        if (coupon_type == 3) {
+            list = []
+        }
+
         return this.success(list);
     }
 

@@ -51,6 +51,11 @@ module.exports = class extends Base {
         .field("id,mobile,name,nickname,avatar")
         .find();
       info.nickname = Buffer.from(info.nickname, "base64").toString();
+
+      // 获取已经获得优惠券的张数
+      const coupon_count = await this.model("user_coupons").where({ user_id: userId }).count()
+      info.coupon_count = coupon_count
+
       return this.success(info);
     }
     else{

@@ -40,8 +40,17 @@ module.exports = class extends Base {
             c.canGet = got == undefined
             return c
         })
+        // console.log('=-=-=-> couponsList:\n', JSON.stringify(couponsList, null, 4))
 
         return this.success(couponsList);
     }
+
+    /**
+     * 获取优惠券类型
+     */
+    // async getTypesAction() {
+    //     const typeList = []
+    //     return this.success()
+    // }
 
 };

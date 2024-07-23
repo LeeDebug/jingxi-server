@@ -78,6 +78,10 @@ module.exports = class extends Base {
       return this.fail("登录失败4");
     }
 
+    // 获取已经获得优惠券的张数
+    const coupon_count = await this.model("user_coupons").where({ user_id: userId }).count()
+    newUserInfo.coupon_count = coupon_count
+
     return this.success({
       token: sessionKey,
       userInfo: newUserInfo,
