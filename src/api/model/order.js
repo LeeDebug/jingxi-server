@@ -149,10 +149,12 @@ module.exports = class extends think.Model {
                 statusText = '交易关闭'; //到时间系统自动取消
                 break;
             case 201:
-                statusText = '待发货';
+                // statusText = '待发货';
+                statusText = '配送中';
                 break;
             case 300:
-                statusText = '待发货';
+                // statusText = '待发货';
+                statusText = '配送中';
                 break;
             case 301:
                 statusText = '已发货';

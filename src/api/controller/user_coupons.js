@@ -44,6 +44,11 @@ module.exports = class extends Base {
         if (coupon_type == 3) {
             list = []
         }
+        // 标记哪些优惠券 可使用
+        list.map(v => {
+            if (v.redeemed == 0) v.canUse = true
+            return v
+        })
 
         return this.success(list);
     }

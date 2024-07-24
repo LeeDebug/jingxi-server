@@ -13,6 +13,7 @@ module.exports = class extends Base {
 		// const userId = this.getLoginUserId();;
 		const userId = this.getLoginUserId();
 		const showType = this.get('showType');
+        // console.log('=-=-=-> listAction -> showType: ', showType)
         const page = this.get('page');
         const size = this.get('size');
         let status = [];
@@ -387,7 +388,7 @@ module.exports = class extends Base {
             actual_price: actualPrice,
             change_price: actualPrice,
             print_info: print_info,
-            offline_pay:offlinePay
+            offline_pay: offlinePay
         };
         // 开启事务，插入订单信息和订单商品
         const orderId = await this.model('order').add(orderInfo);
