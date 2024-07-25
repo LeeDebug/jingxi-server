@@ -4,7 +4,7 @@ const rp = require('request-promise');
 const http = require("http");
 module.exports = class extends Base {
     async timetaskAction() {
-        console.log("=============开始============");
+        // console.log("=============开始============");
         let currentTime = parseInt(new Date().getTime() / 1000);
         let newday = new Date(new Date().setHours(3, 0, 0, 0)) / 1000;
         let newday_over = new Date(new Date().setHours(3, 0, 59, 0)) / 1000;
@@ -84,8 +84,8 @@ module.exports = class extends Base {
         let info = await this.model('settings').where({id:1}).find();
         if(info.reset == 0){
             await this.model('settings').where({id:1}).update({countdown:time,reset:1});
-            console.log('重置了！');
+            // console.log('重置了！');
         }
-        console.log('还没到呢！');
+        // console.log('还没到呢！');
     }
 };

@@ -12,7 +12,7 @@ module.exports = class extends Base {
             as: 'g',
             on: ['c.goods_specification_ids', 'g.id']
         }).select(); // 如果出错了，不会更新数据的
-        console.log(product);
+        // console.log(product);
         // const goods = await this.model('goods').where({is_delete:0}).select();
         const goods = await this.model('goods').where({
             is_delete: 0
@@ -46,7 +46,7 @@ module.exports = class extends Base {
             is_on_sale: 1,
             is_delete: 0
         }).select();
-        console.log(goods);
+        // console.log(goods);
         let info = [];
         for (const item of product) {
             let goods_id = item.goods_id;
@@ -62,7 +62,7 @@ module.exports = class extends Base {
                 }
             }
         }
-        console.log(product);
+        // console.log(product);
         return this.success(info);
     }
     async outsaleAction() {
@@ -77,7 +77,7 @@ module.exports = class extends Base {
             is_on_sale: 0,
             is_delete: 0
         }).select();
-        console.log(goods);
+        // console.log(goods);
         for (const item of product) {
             let goods_id = item.goods_id;
             for (const jtem of goods) {
@@ -92,7 +92,7 @@ module.exports = class extends Base {
                 }
             }
         }
-        console.log(product);
+        // console.log(product);
         return this.success(info);
     }
     async updatePriceAction() {
@@ -266,7 +266,7 @@ module.exports = class extends Base {
         const data = await model.where({
             id: id
         }).find();
-        console.log(data);
+        // console.log(data);
         let category_id = data.category_id;
         let cateData = [];
         const c_data = await this.model('category').where({

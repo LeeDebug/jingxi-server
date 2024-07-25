@@ -9,7 +9,7 @@ module.exports = class extends Base {
      * @return {Promise} []
      */
     async listAction() {
-        console.log('=-=-=-> func => listAction')
+        // console.log('=-=-=-> func => listAction')
 		// const userId = this.getLoginUserId();;
 		const userId = this.getLoginUserId();
 		const showType = this.get('showType');
@@ -51,7 +51,7 @@ module.exports = class extends Base {
     }
     // 获得订单数量
     async countAction() {
-        console.log('=-=-=-> func => countAction')
+        // console.log('=-=-=-> func => countAction')
         const showType = this.get('showType');
 		const userId = this.getLoginUserId();;
         let status = [];
@@ -68,7 +68,7 @@ module.exports = class extends Base {
     }
     // 获得订单数量状态
     async orderCountAction() {
-        console.log('=-=-=-> func => orderCountAction')
+        // console.log('=-=-=-> func => orderCountAction')
 		const user_id = this.getLoginUserId();
         // console.log('=-=-=-> orderCountAction > user_id: ', user_id)
         if(user_id != 0){
@@ -301,28 +301,37 @@ module.exports = class extends Base {
      * @returns {Promise.<void>}
      */
     async submitAction() {
+        // console.log('[order] =-=-=-> func -> submitAction')
         // 获取收货地址信息和计算运费
 		const userId = this.getLoginUserId();;
-        const addressId = this.post('addressId');
-        const freightPrice = this.post('freightPrice');
-        const offlinePay = this.post('offlinePay');
-        let postscript = this.post('postscript');
+        const addressId = this.post('addressId'); // 地址 id
+        const freightPrice = this.post('freightPrice'); // 配送费用
+        const couponId = this.post('couponId'); // 优惠券id
+        const actualPrice_post = this.post('actualPrice'); // 优惠券id
+        const offlinePay = this.post('offlinePay'); // 线下支付标识，一般用不到（后期可当作 堂食 使用）
+        let postscript = this.post('postscript'); // 订单备注
         const buffer = Buffer.from(postscript); // 留言
+
+        // 校验收货地址是否有误
         const checkedAddress = await this.model('address').where({
             id: addressId
         }).find();
+        // console.log('[order] =-=-=-> checkedAddress: ', checkedAddress)
         if (think.isEmpty(checkedAddress)) {
             return this.fail('请选择收货地址');
         }
+
         // 获取要购买的商品
         const checkedGoodsList = await this.model('cart').where({
             user_id: userId,
             checked: 1,
             is_delete: 0
         }).select();
+        // console.log('[order] =-=-=-> checkedGoodsList: ', checkedGoodsList)
         if (think.isEmpty(checkedGoodsList)) {
             return this.fail('请选择商品');
         }
+
         let checkPrice = 0;
         let checkStock = 0;
         for(const item of checkedGoodsList){
@@ -342,16 +351,58 @@ module.exports = class extends Base {
         if(checkPrice > 0){
             return this.fail(400, '价格发生变化，请重新下单');
         }
-        // 获取订单使用的红包
-        // 如果有用红包，则将红包的数量减少，当减到0时，将该条红包删除
+
         // 统计商品总价
         let goodsTotalPrice = 0.00;
         for (const cartItem of checkedGoodsList) {
             goodsTotalPrice += cartItem.number * cartItem.retail_price;
         }
-        // 订单价格计算
         const orderTotalPrice = goodsTotalPrice + freightPrice; // 订单的总价
-        const actualPrice = orderTotalPrice - 0.00; // 减去其它支付的金额后，要实际支付的金额 比如满减等优惠
+
+        // 获取订单使用的优惠券
+        let couponReducePrice = 0.00
+        if (!think.isEmpty(couponId)) {
+            const coupon = await this.model('coupons').where({
+                id: couponId
+            }).find()
+            // console.log('=-=-=-> submitAction -> coupon: ', coupon)
+            /**
+             * 按不同的 优惠券类型 进行折扣
+             */
+            // 折扣价格
+            if (coupon.discount_type == 'percentage') {
+                couponReducePrice = orderTotalPrice * (1 - coupon.discount_value)
+            }
+            // 减免价格
+            if (coupon.discount_type == 'fixed') {
+                couponReducePrice = coupon.discount_value
+            }
+            // console.log('=-=-=-> submitAction -> couponReducePrice: ', couponReducePrice)
+        }
+
+        // 订单价格计算
+        const actualPrice = orderTotalPrice - couponReducePrice; // 减去其它支付的金额后，要实际支付的金额 比如满减等优惠
+
+        // 对比 post 请求传过来的 actualPrice_post 是否一致
+        if (actualPrice != actualPrice_post) {
+            return this.fail(400, "价格计算错误，请重试或联系老板~")
+        }
+        
+        // 如果有用红包，则将红包的数量减少，当减到0时，将该条红包删除
+        if (!think.isEmpty(couponId)) {
+            const user_coupon_model = this.model('user_coupons')
+            const uc_list = await user_coupon_model.where({
+                user_id: userId,
+                coupon_id: couponId
+            }).update({
+                // 优惠券 已使用
+                redeemed: 1,
+                // 优惠券 使用日期
+                redeemed_at: this.getFullDate(),
+            })
+            // console.log('=-=-=-> submitAction -> uc_list: ', uc_list)
+        }
+
         const currentTime = parseInt(new Date().getTime() / 1000);
         let print_info = '';
         for (const item in checkedGoodsList) {

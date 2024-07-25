@@ -133,7 +133,7 @@ module.exports = class extends Base {
         }).where({
             user_id: id
         }).page(page, size).countSelect();
-        console.log(data);
+        // console.log(data);
         return this.success(data);
     }
     async orderAction() {
@@ -145,7 +145,7 @@ module.exports = class extends Base {
             user_id: user_id,
             order_type: ['<', 8],
         }).order(['id DESC']).page(page, size).countSelect();
-        console.log(data.count);
+        // console.log(data.count);
         for (const item of data.data) {
             item.goodsList = await this.model('order_goods').field('goods_name,list_pic_url,number,goods_specifition_name_value,retail_price').where({
                 order_id: item.id,

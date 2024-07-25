@@ -31,7 +31,7 @@ module.exports = class extends Base {
          *      3: 已过期
          */
         const coupon_type = this.get('coupon_type')
-        console.log('=-=-=-> coupon_type: ', coupon_type)
+        // console.log('=-=-=-> coupon_type: ', coupon_type)
         // 未使用
         if (coupon_type == 1) {
             list = list.filter(v => v.redeemed == 0)
@@ -57,23 +57,23 @@ module.exports = class extends Base {
      * 领取优惠券到用户账户
      */
     async getCouponAction() {
-		console.log('=-=-=-> func -> getCouponAction')
+		// console.log('=-=-=-> func -> getCouponAction')
 
 		const userId = this.getLoginUserId();
-        console.log('=-=-=-> getCouponAction -> userId: ', userId)
+        // console.log('=-=-=-> getCouponAction -> userId: ', userId)
 
         const coupon_id = this.post("coupon_id")
-        console.log('=-=-=-> getCouponAction -> coupon_id: ', coupon_id)
+        // console.log('=-=-=-> getCouponAction -> coupon_id: ', coupon_id)
 
         const userCouponInfo = {
             user_id: userId,
             coupon_id: coupon_id
         }
-        console.log('=-=-=-> getCouponAction -> userCouponInfo:\n', JSON.stringify(userCouponInfo, null, 4))
+        // console.log('=-=-=-> getCouponAction -> userCouponInfo:\n', JSON.stringify(userCouponInfo, null, 4))
 
         const model = this.model('user_coupons');
 		const item = await model.where(userCouponInfo).count()
-        console.log('=-=-=-> getCouponAction -> item:\n', JSON.stringify(item, null, 4))
+        // console.log('=-=-=-> getCouponAction -> item:\n', JSON.stringify(item, null, 4))
 
         // 多一层校验，数据库是否已经存在此关联
         if (item != 0) {
@@ -82,7 +82,7 @@ module.exports = class extends Base {
 
         // 将该关联关系存入数据库
         const userCouponId = await model.add(userCouponInfo);
-        console.log('=-=-=-> getCouponAction -> userCouponId: ', userCouponId)
+        // console.log('=-=-=-> getCouponAction -> userCouponId: ', userCouponId)
 
         return this.success({
             userCouponInfo: userCouponInfo

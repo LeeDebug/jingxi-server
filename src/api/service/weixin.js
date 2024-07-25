@@ -58,7 +58,7 @@ module.exports = class extends think.Service {
                 notify_url: think.config('weixin.notify_url'),
                 trade_type: 'JSAPI'
             }, (res) => {
-                console.log(res);
+                // console.log(res);
                 if (res.return_code === 'SUCCESS' && res.result_code === 'SUCCESS') {
                     const returnParams = {
                         'appid': res.appid,
@@ -220,7 +220,7 @@ module.exports = class extends think.Service {
             json: true
         };
         let posting = await rp(sendInfo);
-        console.log(posting);
+        // console.log(posting);
         return posting;
     }
     async getMessageATempId(type) {

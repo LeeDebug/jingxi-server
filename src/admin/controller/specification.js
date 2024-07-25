@@ -212,7 +212,7 @@ module.exports = class extends Base {
             specification_id: id,
             is_delete: 0
         }).select();
-        console.log(goods_spec);
+        // console.log(goods_spec);
         if (goods_spec.length > 0) {
             return this.fail('该型号下有商品，暂不能删除')
         } else {

@@ -14,7 +14,7 @@ module.exports = class extends Base {
      * @returns {Promise.<*>}
      */
     async listAction() {
-		console.log('=-=-=-> func -> listAction')
+		// console.log('=-=-=-> func -> listAction')
         // const page = this.get('page');
 		// console.log('=-=-=-> listAction -> page: ', page)
         // const size = this.get('size');

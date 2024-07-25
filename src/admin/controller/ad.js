@@ -48,7 +48,7 @@ module.exports = class extends Base {
             return false;
         }
         const values = this.post();
-        console.log(values);
+        // console.log(values);
         values.end_time = parseInt(new Date(values.end_time).getTime() / 1000);
         const id = this.post('id');
         const model = this.model('ad');

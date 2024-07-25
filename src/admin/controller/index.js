@@ -34,7 +34,7 @@ module.exports = class extends Base {
     }
     async mainAction() {
         const index = this.get('pindex');
-        console.log('index:' + index);
+        // console.log('index:' + index);
         let todayTimeStamp = new Date(new Date().setHours(0, 0, 0, 0)) / 1000; //今天零点的时间戳
         let yesTimeStamp = todayTimeStamp - 86400; //昨天零点的时间戳
         let sevenTimeStamp = todayTimeStamp - 86400 * 7; //7天前零点的时间戳
@@ -121,17 +121,17 @@ module.exports = class extends Base {
                 add_time: ['BETWEEN', yesTimeStamp, todayTimeStamp],
                 order_status: ['IN', [201, 802, 300, 301]]
             }).count();
-            console.log('------------321----------');
-            console.log(payOrderNum);
-            console.log('-----------3321-----------');
+            // console.log('------------321----------');
+            // console.log(payOrderNum);
+            // console.log('-----------3321-----------');
             payOrderSum = await this.model('order').where({
                 is_delete: 0,
                 add_time: ['BETWEEN', yesTimeStamp, todayTimeStamp],
                 order_status: ['IN', [201, 802, 300, 301]]
             }).sum('actual_price');
-            console.log('-----------123-----------');
-            console.log(payOrderSum);
-            console.log('-----------123-----------');
+            // console.log('-----------123-----------');
+            // console.log(payOrderSum);
+            // console.log('-----------123-----------');
 
         }
         else if (index == 2) {

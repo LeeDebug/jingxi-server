@@ -99,7 +99,7 @@ module.exports = class extends Base {
         return this.success(insertId);
     }
     async updateStock(goods_sn, goods_number) {
-        console.log('存在，现在就更新');
+        // console.log('存在，现在就更新');
         await this.model('product').where({
             goods_sn: goods_sn
         }).update({
@@ -861,7 +861,7 @@ module.exports = class extends Base {
     }
     async deleteListPicUrlAction() {
         const id = this.post('id');
-        console.log(id);
+        // console.log(id);
         await this.model('goods').where({
             id: id
         }).limit(1).update({
@@ -920,13 +920,13 @@ module.exports = class extends Base {
                 try {
                     bucketManager.fetch(url, bucket, key, function(err, respBody, respInfo) {
                         if (err) {
-                            console.log(err);
+                            // console.log(err);
                             //throw err;
                         } else {
                             if (respInfo.statusCode == 200) {
                                 resolve(respBody.key)
                             } else {
-                                console.log(respInfo.statusCode);
+                                // console.log(respInfo.statusCode);
                             }
                         }
                     });
@@ -936,7 +936,7 @@ module.exports = class extends Base {
             })
         };
         const httpsUrl = await uploadQiniu();
-        console.log(httpsUrl);
+        // console.log(httpsUrl);
         let lastUrl = domain + httpsUrl;
         return this.success(lastUrl);
     }

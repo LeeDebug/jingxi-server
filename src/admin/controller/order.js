@@ -23,7 +23,7 @@ module.exports = class extends Base {
                 order_status: ['IN', status],
                 order_type: ['<', 7],
             }).order(['id DESC']).page(page, size).countSelect();
-            console.log(data);
+            // console.log(data);
         } else {
             let orderData = await this.model('order_express').where({
                 logistic_code: logistic_code
@@ -129,8 +129,8 @@ module.exports = class extends Base {
         let price = this.post('retail_price');
         let addOrMinus = this.post('addOrMinus');
         let changePrice = Number(number) * Number(price);
-        console.log(order_id);
-        console.log(changePrice);
+        // console.log(order_id);
+        // console.log(changePrice);
         if (addOrMinus == 0) {
             await this.model('order_goods').where({
                 id: id
@@ -170,15 +170,15 @@ module.exports = class extends Base {
         }
     }
     async goodsListDeleteAction() {
-        console.log(this.post('id'));
+        // console.log(this.post('id'));
         let id = this.post('id');
         let order_id = this.post('order_id');
         let number = this.post('number');
         let price = this.post('retail_price');
         let addOrMinus = this.post('addOrMinus');
         let changePrice = Number(number) * Number(price);
-        console.log(order_id);
-        console.log(changePrice);
+        // console.log(order_id);
+        // console.log(changePrice);
         await this.model('order_goods').where({
             id: id
         }).update({
@@ -267,7 +267,7 @@ module.exports = class extends Base {
             }).field('goods_sn').find();
             item.goods_sn = info.goods_sn;
         }
-        console.log(data.goodsList);
+        // console.log(data.goodsList);
         let userInfo = await this.model('user').where({
             id: data.user_id
         }).find();
@@ -425,9 +425,9 @@ module.exports = class extends Base {
         const orderId = this.post('orderId');
         const sender = this.post('sender');
         const receiver = this.post('receiver');
-        console.log(orderId);
-        console.log(sender);
-        console.log(receiver);
+        // console.log(orderId);
+        // console.log(sender);
+        // console.log(receiver);
         let senderOptions = sender.senderOptions;
         let receiveOptions = receiver.receiveOptions;
         let senderInfo = {
@@ -461,8 +461,8 @@ module.exports = class extends Base {
         // 每次重新生成一次订单号，这样，不会出现已经下过单的情况了。
         const expressType = this.post('expressType');
         const latestExpressInfo = await this.model('order_express').getMianExpress(orderId, senderInfo, receiverInfo, expressType);
-        console.log('lastExpressInfo++++++++++++++++++++++');
-        console.log(latestExpressInfo);
+        // console.log('lastExpressInfo++++++++++++++++++++++');
+        // console.log(latestExpressInfo);
         if (latestExpressInfo.ResultCode == 100) {
             // 获取快递单号成功，然后存入order_express中
             this.orderExpressAdd(latestExpressInfo, orderId)

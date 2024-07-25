@@ -73,7 +73,7 @@ module.exports = class extends think.Model {
         // let aliexpress = think.config('aliexpress');
 		
         const currentTime = parseInt(new Date().getTime() / 1000);
-        console.log('==============orderExpress===============');
+        // console.log('==============orderExpress===============');
         let info = await this.model('order_express').where({
             order_id: orderId
         }).find();
@@ -104,23 +104,23 @@ module.exports = class extends think.Model {
                 shipperName = shipperCode;
             }
             let lastExpressInfo = await this.getExpressInfo(shipperName, expressNo);
-            console.log(lastExpressInfo);
+            // console.log(lastExpressInfo);
             let deliverystatus = lastExpressInfo.deliverystatus;
             let newUpdateTime = lastExpressInfo.updateTime;
             newUpdateTime = parseInt(new Date(newUpdateTime).getTime() / 1000);
             deliverystatus = await this.getDeliverystatus(deliverystatus);
-            console.log(deliverystatus);
+            // console.log(deliverystatus);
             let issign = lastExpressInfo.issign;
             let traces = lastExpressInfo.list;
             traces = JSON.stringify(traces);
-            console.log(traces);
+            // console.log(traces);
             let dataInfo = {
                 express_status: deliverystatus,
                 is_finish: issign,
                 traces: traces,
                 update_time: newUpdateTime
             }
-            console.log('出发1222222221');
+            // console.log('出发1222222221');
             await this.model('order_express').where({
                 order_id: orderId
             }).update(dataInfo);
@@ -132,7 +132,7 @@ module.exports = class extends think.Model {
         // return this.success(latestExpressInfo);
     }
     async getExpressInfo(shipperName, expressNo) {
-        console.log('出发1111111');
+        // console.log('出发1111111');
 		let appCode = "APPCODE "+ think.config('aliexpress.appcode');
         const options = {
             method: 'GET',

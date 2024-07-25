@@ -168,7 +168,6 @@ module.exports = class extends think.Service {
         } catch (err) {
             return expressInfo;
         }
-        return expressInfo;
     }
     // 电子面单结束
     // 批量打印开始
@@ -190,7 +189,7 @@ module.exports = class extends think.Service {
         let EBusinessID = think.config('mianexpress.appid');
         //组装表单
         let form = '<form id="form1" method="POST" action="' + API_URL + '"><input type="text" name="RequestData" value="' + requestData + '"/><input type="text" name="EBusinessID" value="' + EBusinessID + '"/><input type="text" name="DataSign" value="' + dataSign + '"/><input type="text" name="IsPriview" value="' + is_priview + '"/></form><script>form1.submit();</script>';
-        console.log(form);
+        // console.log(form);
         return form;
     }
     // 加密签名
@@ -226,7 +225,7 @@ module.exports = class extends think.Service {
             }
             var ip = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/;
             var text = ip.exec(requestResult);
-            console.log(text[0]);
+            // console.log(text[0]);
             return text[0];
         } catch (err) {
             return 0;

@@ -43,41 +43,6 @@ module.exports = class extends Base {
             rule_content: '哈哈'
         });
         return this.success('haha');
-        const data = this.post("");
-        const {
-            ToUserName,
-            FromUserName,
-            CreateTime,
-            MsgType,
-            Content,
-            MsgId
-        } = data;
-        // console.log("data: ", JSON.stringify(data));
-        const tokenServer = think.service('weixin', 'api');
-        const token = await tokenServer.getAccessToken();
-        // console.log(token);
-        switch (data.MsgType) {
-            case 'text':
-                { //用户在客服会话中发送文本消息
-                    await tokenServer.sendTextMessage(data, token);
-                    break;
-                }
-                // case 'image': { //用户在客服会话中发送图片消息
-                //     await sendImageMessage(data.MediaId, data, access_token);
-                //     await tokenServer.sendImageMessage(data, token);
-                //     break;
-                // }
-            case 'event':
-                {
-                    if (data.Event == 'user_enter_tempsession') { //用户在小程序“客服会话按钮”进入客服会话,在聊天框进入不会有此事件
-                        // await tokenServer.sendTextMessage(data, token);
-                        // await sendTextMessage("您有什么问题吗?", data, access_token);
-                    } else if (data.Event == 'kf_create_session') { //网页客服进入回话
-                        console.log('网页客服进入回话');
-                    }
-                    break;
-                }
-        }
         //  https://www.jianshu.com/p/3d59ae5e69ab
     }
 };
