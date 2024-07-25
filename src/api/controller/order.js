@@ -308,6 +308,7 @@ module.exports = class extends Base {
         const freightPrice = this.post('freightPrice'); // 配送费用
         const couponId = this.post('couponId'); // 优惠券id
         const actualPrice_post = this.post('actualPrice'); // 优惠券id
+        // console.log('[order] =-=-=-> actualPrice_post: ', actualPrice_post)
         const offlinePay = this.post('offlinePay'); // 线下支付标识，一般用不到（后期可当作 堂食 使用）
         let postscript = this.post('postscript'); // 订单备注
         const buffer = Buffer.from(postscript); // 留言
@@ -357,7 +358,9 @@ module.exports = class extends Base {
         for (const cartItem of checkedGoodsList) {
             goodsTotalPrice += cartItem.number * cartItem.retail_price;
         }
+        // console.log('[order] =-=-=-> submitAction -> goodsTotalPrice: ', goodsTotalPrice)
         const orderTotalPrice = goodsTotalPrice + freightPrice; // 订单的总价
+        // console.log('[order] =-=-=-> submitAction -> orderTotalPrice: ', orderTotalPrice)
 
         // 获取订单使用的优惠券
         let couponReducePrice = 0.00
@@ -365,7 +368,7 @@ module.exports = class extends Base {
             const coupon = await this.model('coupons').where({
                 id: couponId
             }).find()
-            // console.log('=-=-=-> submitAction -> coupon: ', coupon)
+            // console.log('[order] =-=-=-> submitAction -> coupon: ', coupon)
             /**
              * 按不同的 优惠券类型 进行折扣
              */
@@ -375,13 +378,15 @@ module.exports = class extends Base {
             }
             // 减免价格
             if (coupon.discount_type == 'fixed') {
-                couponReducePrice = coupon.discount_value
+                // 取 优惠券的优惠价格 和 订单总价的最小值
+                couponReducePrice = Math.min(coupon.discount_value, orderTotalPrice)
             }
-            // console.log('=-=-=-> submitAction -> couponReducePrice: ', couponReducePrice)
+            // console.log('[order] =-=-=-> submitAction -> couponReducePrice: ', couponReducePrice)
         }
 
         // 订单价格计算
         const actualPrice = orderTotalPrice - couponReducePrice; // 减去其它支付的金额后，要实际支付的金额 比如满减等优惠
+        // console.log('[order] =-=-=-> submitAction -> actualPrice: ', actualPrice)
 
         // 对比 post 请求传过来的 actualPrice_post 是否一致
         if (actualPrice != actualPrice_post) {
@@ -400,7 +405,7 @@ module.exports = class extends Base {
                 // 优惠券 使用日期
                 redeemed_at: this.getFullDate(),
             })
-            // console.log('=-=-=-> submitAction -> uc_list: ', uc_list)
+            // console.log('[order] =-=-=-> submitAction -> uc_list: ', uc_list)
         }
 
         const currentTime = parseInt(new Date().getTime() / 1000);
