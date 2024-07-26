@@ -32,8 +32,8 @@ module.exports = class extends Base {
         return this.success(data);
     }
     async currentlistAction() {
-        const page = this.post('page');
-        const size = this.post('size');
+        const page = 1 // this.post('page');
+        const size = 99 // this.post('size');
         const categoryId = this.post('id');
         if (categoryId == 0) {
             let list = await this.model('goods').where({
@@ -41,7 +41,7 @@ module.exports = class extends Base {
                 is_delete: 0
             }).order({
                 sort_order: 'asc'
-            }).field('name,id,goods_brief,min_retail_price,list_pic_url,goods_number').page(page, size).countSelect();
+            }).field('name,id,category_id,goods_brief,min_retail_price,list_pic_url,goods_number').page(page, size).countSelect();
             return this.success(list);
         } else {
             let list = await this.model('goods').where({
@@ -50,7 +50,7 @@ module.exports = class extends Base {
                 category_id: categoryId
             }).order({
                 sort_order: 'asc'
-            }).field('name,id,goods_brief,min_retail_price,list_pic_url,goods_number').page(page, size).countSelect();
+            }).field('name,id,category_id,goods_brief,min_retail_price,list_pic_url,goods_number').page(page, size).countSelect();
             return this.success(list);
         }
     }
