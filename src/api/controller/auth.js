@@ -80,6 +80,7 @@ module.exports = class extends Base {
 
     /**
      * 在 我的 页面会用到的接口数据
+     * PS: 需要同时修改 loginByWeixinAction 和 userDetailAction 两个函数
      */
     // 获取当前余额
     const balance_number = '45.00'
