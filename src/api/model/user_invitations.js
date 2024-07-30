@@ -7,16 +7,16 @@ module.exports = class extends think.Model {
         }).find();
         let statusText = '';
         switch (recordInfo.status) {
-            case '1':
+            case '1': // pending
                 statusText = '未接收';
                 break;
-			case '2':
+			case '2': // accepted
 				statusText = '已注册';
 				break;
-            case '3':
+            case '3': // ordered
                 statusText = '已下单';
                 break;
-            case '4':
+            case '4': // rebated
                 statusText = '已返利';
                 break;
 			default:

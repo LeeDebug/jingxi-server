@@ -7,7 +7,7 @@ module.exports = class extends Base {
      * @returns {Promise.<*>}
      */
     async listAction() {
-		console.log('=-=-=-> func -> user_invitations -> listAction')
+		// console.log('=-=-=-> func -> user_invitations -> listAction')
 		const userId = this.getLoginUserId();;
 
 		// 获取列表数据
@@ -25,7 +25,7 @@ module.exports = class extends Base {
             // 如果邀请人已经注册，查询邀请人的头像
             if (item.status > 1 && item.invitee_user_id) {
                 item.invitee_user_avatar = await this.model('user').getUserAvatar(item.invitee_user_id)
-                console.log('=-=-=-> item.invitee_user_avatar: ', item.invitee_user_avatar)
+                // console.log('=-=-=-> item.invitee_user_avatar: ', item.invitee_user_avatar)
             }
         }
         return this.success(list);

@@ -62,8 +62,17 @@ module.exports = class extends Base {
 		const userId = this.getLoginUserId();
         // console.log('=-=-=-> getCouponAction -> userId: ', userId)
 
-        const coupon_id = this.post("coupon_id")
+        let coupon_id = this.post("coupon_id")
         // console.log('=-=-=-> getCouponAction -> coupon_id: ', coupon_id)
+
+        /**
+         * 如果没有 coupon_id 但是有 coupon_code 属性，则重新获取
+         */
+        const coupon_code = this.post("coupon_code")
+        if (think.isEmpty(coupon_id) && !think.isEmpty(coupon_code)) {
+            const coupon_item = await this.model('coupons').where({ code: coupon_code }).find()
+            coupon_id = coupon_item.id
+        }
 
         const userCouponInfo = {
             user_id: userId,
