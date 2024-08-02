@@ -10,7 +10,7 @@ module.exports = {
     encoding: 'utf8mb4',
     host: '127.0.0.1',
     port: '3306',
-    user: 'sample_user',
-    password: 'sample_user',
+    user: 'jngxee_admin',
+    password: 'jngxee_admin',
     dateStrings: true
 };
