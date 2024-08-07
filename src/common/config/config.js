@@ -6,8 +6,8 @@ module.exports = {
     weixin: {
         appid: 'wx7822ea3e9e34c333', // 小程序 appid
         secret: '67e9b21df7d0e24269fe87b1e144dc9e', // 小程序密钥
-        mch_id: '15988888888', // 商户帐号ID
-        partner_key: 'asdasdasdasdasdasdasd', // 微信支付密钥
+        mch_id: '1682574972', // 商户帐号ID
+        partner_key: 'aB3kL9mN5pR1sT4uV6wX8yZ01qQ2rR7tT9vV0wW6xX7zZ2A4S6D8F0', // 微信支付密钥
         notify_url: 'https://www.您的域名.com/api/pay/notify' // 微信支付异步通知
     },
     express: {

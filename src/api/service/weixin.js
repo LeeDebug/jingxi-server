@@ -40,13 +40,16 @@ module.exports = class extends think.Service {
      * @returns {Promise}
      */
     async createUnifiedOrder(payInfo) {
+        console.log('=-=-=-> [service/weixin.js] createUnifiedOrder -> payInfo: ', payInfo)
         const WeiXinPay = require('weixinpay');
+        console.log('=-=-=-> WeiXinPay: ', WeiXinPay.prototype)
         const weixinpay = new WeiXinPay({
             appid: think.config('weixin.appid'), // 微信小程序appid
             openid: payInfo.openid, // 用户openid
             mch_id: think.config('weixin.mch_id'), // 商户帐号ID
             partner_key: think.config('weixin.partner_key') // 秘钥
         });
+        console.log('=-=-=-> [service/weixin.js] createUnifiedOrder -> weixinpay: ', weixinpay)
         return new Promise((resolve, reject) => {
             // let total_fee = this.getTotalFee(payInfo.out_trade_no);
             weixinpay.createUnifiedOrder({
@@ -58,7 +61,7 @@ module.exports = class extends think.Service {
                 notify_url: think.config('weixin.notify_url'),
                 trade_type: 'JSAPI'
             }, (res) => {
-                // console.log(res);
+                console.log('=-=-=-> [service/weixin.js] createUnifiedOrder -> res: ', res)
                 if (res.return_code === 'SUCCESS' && res.result_code === 'SUCCESS') {
                     const returnParams = {
                         'appid': res.appid,
