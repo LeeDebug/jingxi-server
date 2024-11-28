@@ -8,7 +8,7 @@ module.exports = {
     database: 'jingxi', // hiolabsDB
     prefix: 'hiolabs_',
     encoding: 'utf8mb4',
-    host: '192.144.217.153',
+    host: '127.0.0.1',
     port: '3306',
     user: 'root',
     password: 'nSCWxSPNwApGnwyJ',
